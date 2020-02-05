@@ -1,17 +1,15 @@
 const express = require("express");
 const bodyParser = require("body-parser");
 const todos = require("./todos");
+require("dotenv").config();
 
-
+const PORT = process.env.PORT;
 const app = express();
 
-// parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
  
-// parse application/json
 app.use(bodyParser.json())
 
-// Get data all
 app.get("/", (req, res) => {
     res.send({ message: "Welcome to my API", data: todos });
 });
@@ -52,7 +50,6 @@ app.get("/:id", (req, res) => {
     res.send({ message: `This is todo with ${id},`, data: todo });
 });
 
-// Delete data all
 app.delete("/", (req, res) => {
 
     todos.splice(0, todos.length);
@@ -60,13 +57,6 @@ app.delete("/", (req, res) => {
     res.send({ message: `Your data has been delete all`, data: todos });
 });
 
-app.delete("/:id", (req, res) => {
-    let id = req.params.id;
-
-
-    res.send({ message: `Your data in ${id} has been delete`});
-});
-
-app.listen(3001, () => {
-    console.log("My API is listen on PORT:3001");
+app.listen(PORT, () => {
+    console.log(`My API is listen on PORT: ${PORT}`);
 });
