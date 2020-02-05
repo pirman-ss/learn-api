@@ -28,7 +28,6 @@ app.get("/hello/:id", (req, res) => {
     });
 });
 
-// Post data
 app.post("/", (req, res) => {
     const { id, todo } = req.body;
 
@@ -37,8 +36,19 @@ app.post("/", (req, res) => {
     res.send({ message: "Your data is added", data: todos });
 });
 
-// Get data by id
 app.get("/:id", (req, res) => {
+    const{id} = req.params
+
+    const todo = todos.filter (item => {
+        if(item.id == id) {
+            return item
+        }
+    })
+    
+    res.send({ message: `This is todo with ${id},`, data: todo });
+});
+
+app.delete("/:id", (req, res) => {
     const{id} = req.params
 
     const todo = todos.filter (item => {
